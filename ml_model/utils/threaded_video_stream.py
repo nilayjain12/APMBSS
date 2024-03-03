@@ -4,7 +4,7 @@ from imutils.video import FPS
 from cv2 import VideoCapture
 
 class WebcamVideoStream:
-    def __init__(self, src=0):
+    def __init__(self, src=2):
         self.stream = VideoCapture(src)
         (self.grabbed, self.frame) = self.stream.read()
         self.stopped = False
