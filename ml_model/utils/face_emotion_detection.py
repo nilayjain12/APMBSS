@@ -4,7 +4,7 @@ import numpy as np
 from threaded_video_stream import *
 
 # Loading face emotion detection model
-model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model.pkl'
+model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model_sample.pkl'
 
 with open(model_pickle_file_path, 'rb+') as file:
     mood_detection_face_model = pickle.load(file)
