@@ -2,9 +2,10 @@ import cv2
 import pickle
 import numpy as np
 from threaded_video_stream import *
+import time
 
 # Loading face emotion detection model
-model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model_sample.pkl'
+model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model.pkl'
 
 with open(model_pickle_file_path, 'rb+') as file:
     mood_detection_face_model = pickle.load(file)
@@ -21,7 +22,17 @@ mood_dict = {
 vs = WebcamVideoStream(src=2).start()
 fps = FPS().start()
 
+# Initialize the start time
+start_time = time.time()
+
+# Variable to store the last mood detected
+last_mood_detected = None
+
 while True:
+    # Check if 20 seconds have passed
+    if time.time() - start_time > 20:
+        break
+
     frame = vs.read()
     if frame is None:
         break
@@ -31,7 +42,7 @@ while True:
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # Detect faces in the frame
-    faces = face_detector.detectMultiScale(gray_frame, scaleFactor=1.3, minNeighbors=5)
+    faces = face_detector.detectMultiScale(gray_frame, scaleFactor=2.3, minNeighbors=5)
 
     # Process each detected face
     for (x, y, w, h) in faces:
@@ -42,6 +53,7 @@ while True:
         # Predict the mood
         mood_prediction = mood_detection_face_model.predict(cropped_img)
         max_index = int(np.argmax(mood_prediction))
+        last_mood_detected = mood_dict[max_index] # Update the last mood detected
         cv2.putText(frame, mood_dict[max_index], (x + 5, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('Mood Detection', frame)
@@ -58,3 +70,6 @@ print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 # Release the video stream and close all OpenCV windows
 vs.stop()
 cv2.destroyAllWindows()
+
+# Print the last mood detected
+print(f"Last mood detected: {last_mood_detected}")
