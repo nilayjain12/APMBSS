@@ -3,14 +3,18 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import random
 import webbrowser
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 genre = decide_combined_mood(last_mood_detected, predicted_mood)
 
 
 # Replace with your Spotify API credentials
-CLIENT_ID = '5e72cefadf2242f185811400e85ae9cf'
-CLIENT_SECRET = '7353a65633624c60996996693beba8e5'
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 # Set up Spotify API authentication
 client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
