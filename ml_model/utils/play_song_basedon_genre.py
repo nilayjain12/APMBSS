@@ -3,6 +3,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import random
 import webbrowser
+import re
 import os
 from dotenv import load_dotenv
 
@@ -29,6 +30,12 @@ def get_random_song(genre):
 
     return random_track['name'], random_track['artists'][0]['name'], random_track['external_urls']['spotify']
 
+def extract_track_id(url):
+    match = re.search(r'/track/([a-zA-Z0-9]+)$', url)
+    if match:
+        return match.group(1)
+    return None
+
 def play_random_song(genre):
     # Get a random genre
     genre = genre
@@ -36,11 +43,14 @@ def play_random_song(genre):
 
     # Get a random song from the selected genre
     song_name, artist_name, spotify_url = get_random_song(genre)
-    print(f"Selected Song: {song_name} by {artist_name}")
+    # Extract and store the track ID in the variable
+    track_id = extract_track_id(spotify_url)
+    return (song_name, artist_name, spotify_url, track_id)
 
     # Open the Spotify track page in the default web browser
-    webbrowser.open(spotify_url)
+    # webbrowser.open(spotify_url)
 
 print('Current Mood:\n', 'Face Mood: ', last_mood_detected, '\n', 'Weather Mood:', predicted_mood)
 # Play a random song
-play_random_song(genre)
+song_name, artist_name, spotify_url, track_id = play_random_song(genre)
+print(f'{song_name} \n {artist_name} \n {spotify_url} \n {track_id}')
