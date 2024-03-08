@@ -1,5 +1,5 @@
-from face_emotion_detection import get_last_mood_detected
-from weather_emotion_detection import predict_mood_based_on_weather
+from utils.face_emotion_detection import get_last_mood_detected
+from utils.weather_emotion_detection import predict_mood_based_on_weather
 from random import choice
 
 

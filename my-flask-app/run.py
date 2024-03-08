@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from play_song_basedon_genre import song_data
+from utils.play_song_basedon_genre import song_data
 
 app = Flask(__name__)
 CORS(app) # This will enable CORS for all routes

@@ -1,7 +1,7 @@
 import cv2
 import pickle
 import numpy as np
-from threaded_video_stream import *
+from utils.threaded_video_stream import *
 import time
 
 # Loading face emotion detection model

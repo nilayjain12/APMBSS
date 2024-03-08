@@ -1,4 +1,4 @@
-from getting_combined_mood import decide_combined_mood, last_mood_detected, predicted_mood
+from utils.getting_combined_mood import decide_combined_mood, last_mood_detected, predicted_mood
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import random
