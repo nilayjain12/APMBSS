@@ -27,100 +27,8 @@
     transition: all 0.6s ease;
   }
   
-  #button_05 {
-    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_06 {
-    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_07 {
-    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_08 {
-    box-shadow: 6px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_09 {
-    box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_10 {
-    box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_11 {
-    box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_12 {
-    box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_13 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_14 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_15 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 0.2);
-  }
-  
-  #button_16 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 0.2);
-  }
-  
   #button_21 {
     box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_22 {
-    box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_23 {
-    box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_24 {
-    box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_25 {
-    box-shadow: 0px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_26 {
-    box-shadow: 0px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_27 {
-    box-shadow: 0px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_28 {
-    box-shadow: 0px 5px rgba(0, 0, 0, 1);
-  }
-  
-  #button_29 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 1);
-  }
-  
-  #button_30 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 1);
-  }
-  
-  #button_31 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 1);
-  }
-  
-  #button_32 {
-    box-shadow: 0 7px 0 -3px rgba(0, 0, 0, 1);
   }
   
   .no-border {
@@ -164,4 +72,38 @@
     background-color: white;
     color: black;
   }
-  
+
+  /* 11 */
+.btn-11 {
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.btn-11:hover {
+   background: #000;
+  color: #fff;
+}
+.btn-11:before {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    top: -180px;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #fff;
+    animation: shiny-btn1 3s ease-in-out infinite;
+}
+.btn-11:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+}
+
+
+@-webkit-keyframes shiny-btn1 {
+    0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -webkit-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -webkit-transform: scale(50) rotate(45deg); opacity: 0; }
+}

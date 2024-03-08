@@ -21,7 +21,7 @@ mood_dict = {
 def get_last_mood_detected():
     global last_mood_detected
     # Starting the webcam feed
-    vs = WebcamVideoStream(src=2).start()
+    vs = WebcamVideoStream(src=3).start()
     fps = FPS().start()
 
     # Initialize the start time

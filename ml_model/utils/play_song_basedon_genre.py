@@ -36,7 +36,7 @@ def extract_track_id(url):
         return match.group(1)
     return None
 
-def play_random_song(genre):
+def play_random_song(genre, last_mood_detected, predicted_mood):
     # Get a random genre
     genre = genre
     print(f"Selected Genre: {genre}")
@@ -45,12 +45,19 @@ def play_random_song(genre):
     song_name, artist_name, spotify_url = get_random_song(genre)
     # Extract and store the track ID in the variable
     track_id = extract_track_id(spotify_url)
-    return (song_name, artist_name, spotify_url, track_id)
+    return (song_name, artist_name, spotify_url, track_id, last_mood_detected, predicted_mood)
 
     # Open the Spotify track page in the default web browser
     # webbrowser.open(spotify_url)
 
-print('Current Mood:\n', 'Face Mood: ', last_mood_detected, '\n', 'Weather Mood:', predicted_mood)
 # Play a random song
-song_name, artist_name, spotify_url, track_id = play_random_song(genre)
-print(f'{song_name} \n {artist_name} \n {spotify_url} \n {track_id}')
+song_name, artist_name, spotify_url, track_id, last_mood_detected, predicted_mood = play_random_song(genre, last_mood_detected, predicted_mood)
+
+song_data = {
+        "song_name": song_name,
+        "artist_name": artist_name,
+        "spotify_url": spotify_url, 
+        "track_id": track_id, 
+        "last_mood_detected": last_mood_detected, 
+        "predicted_mood": predicted_mood
+    }
