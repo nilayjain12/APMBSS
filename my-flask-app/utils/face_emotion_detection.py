@@ -21,7 +21,7 @@ mood_dict = {
 def get_last_mood_detected():
     global last_mood_detected
     # Starting the webcam feed
-    vs = WebcamVideoStream(src=3).start()
+    vs = cv2.VideoCapture(3, cv2.CAP_DSHOW)
     fps = FPS().start()
 
     # Initialize the start time
@@ -32,14 +32,14 @@ def get_last_mood_detected():
 
     while True:
         # Check if 20 seconds have passed
-        if time.time() - start_time > 20:
+        if time.time() - start_time > 10:
             break
 
-        frame = vs.read()
-        if frame is None:
+        ret, frame = vs.read()
+        if not ret: # Check if frame was successfully read
             break
 
-        frame = cv2.resize(frame, (640, 360))
+        frame = cv2.resize(frame, (1920, 1080))
         face_detector = cv2.CascadeClassifier(r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\Automated-Personalized-Mood-Based-Song-Selector\haarcascade_face_detection\haarcascade_frontalface_default.xml')
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -70,7 +70,6 @@ def get_last_mood_detected():
     print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
     # Release the video stream and close all OpenCV windows
-    vs.stop()
     cv2.destroyAllWindows()
 
     return last_mood_detected
