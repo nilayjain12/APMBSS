@@ -1,9 +1,10 @@
-from utils.face_emotion_detection import get_last_mood_detected
-from utils.weather_emotion_detection import predict_mood_based_on_weather
+import face_emotion_detection
+import weather_emotion_detection
 from random import choice
 
-
-def decide_combined_mood(last_mood_detected, predicted):
+def decide_combined_mood():
+    last_mood_detected = face_emotion_detection.get_last_mood_detected()
+    predicted_mood = weather_emotion_detection.predict_mood_based_on_weather()
 
     genre_energetic_energetic = [
         'edm',
@@ -46,13 +47,13 @@ def decide_combined_mood(last_mood_detected, predicted):
         'swedish'
     ]
     genre_happy_calm = [
-        'bossanova', 'chill', 'jazz', 'new age', 'piano', 'relax', 'soundtracks', 'study'
+        'bossanova', 'chill', 'jazz', 'piano', 'soundtracks', 'study'
     ]
     genre_happy_sad = [
         'happy', 'study', 'soundtracks'
     ]
     genre_calm_calm = [
-        'acoustic', 'bossanova', 'chill', 'classical', 'jazz', 'new age', 'piano', 'relax', 'sleep', 'soundtracks', 'study'
+        'acoustic', 'bossanova', 'chill', 'classical', 'jazz', 'piano', 'sleep', 'soundtracks', 'study'
     ]
     genre_calm_sad = [
         'rainy-day', 'sad'
@@ -63,37 +64,34 @@ def decide_combined_mood(last_mood_detected, predicted):
 
     # Logic to decide combined mood
     if (last_mood_detected == 'energetic' and predicted_mood == 'energetic'):
-        return choice(genre_energetic_energetic)
+        return (choice(genre_energetic_energetic), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'energetic' and predicted_mood == 'happy') or (last_mood_detected == 'happy' and predicted_mood == 'energetic'):
-        return choice(genre_energetic_happy)
+        return (choice(genre_energetic_happy), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'energetic' and predicted_mood == 'calm') or (last_mood_detected == 'calm' and predicted_mood == 'energetic'):
-        return choice(genre_energetic_calm)
+        return (choice(genre_energetic_calm), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'energetic' and predicted_mood == 'sad') or (last_mood_detected == 'sad' and predicted_mood == 'energetic'):
-        return choice(genre_energetic_sad)
+        return (choice(genre_energetic_sad), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'happy' and predicted_mood == 'happy'):
-        return choice(genre_happy_happy)
+        return (choice(genre_happy_happy), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'happy' and predicted_mood == 'calm') or (last_mood_detected == 'calm' and predicted_mood == 'happy'):
-        return choice(genre_happy_calm)
+        return (choice(genre_happy_calm), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'happy' and predicted_mood == 'sad') or (last_mood_detected == 'sad' and predicted_mood == 'happy'):
-        return choice(genre_happy_sad)
+        return (choice(genre_happy_sad), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'calm' and predicted_mood == 'calm'):
-        return choice(genre_calm_calm)
+        return (choice(genre_calm_calm), last_mood_detected, predicted_mood)
     
     elif (last_mood_detected == 'calm' and predicted_mood == 'sad') or (last_mood_detected == 'sad' and predicted_mood == 'calm'):
-        return choice(genre_calm_sad)
+        return (choice(genre_calm_sad), last_mood_detected, predicted_mood)
     elif (last_mood_detected == 'sad' and predicted_mood == 'sad'):
-        return choice(genre_sad)
+        return (choice(genre_sad), last_mood_detected, predicted_mood)
     else:
-        return 'Cannot detect any genre! Play Random Song!! ENJOY!!'
+        return 'Cannot detect any genre! Playing a Random Song!! ENJOY!!'
 
 
-last_mood_detected = get_last_mood_detected()
-predicted_mood = predict_mood_based_on_weather()
-decide_combined_mood(last_mood_detected, predicted_mood)

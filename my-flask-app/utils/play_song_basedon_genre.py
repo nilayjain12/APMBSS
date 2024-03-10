@@ -1,17 +1,12 @@
-from utils.getting_combined_mood import decide_combined_mood, last_mood_detected, predicted_mood
+import getting_combined_mood
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import random
-import webbrowser
 import re
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
-
-genre = decide_combined_mood(last_mood_detected, predicted_mood)
-
 
 # Replace with your Spotify API credentials
 CLIENT_ID = os.getenv('CLIENT_ID')
@@ -36,7 +31,7 @@ def extract_track_id(url):
         return match.group(1)
     return None
 
-def play_random_song(genre, last_mood_detected, predicted_mood):
+def play_random_song(genre):
     # Get a random genre
     genre = genre
     print(f"Selected Genre: {genre}")
@@ -45,19 +40,11 @@ def play_random_song(genre, last_mood_detected, predicted_mood):
     song_name, artist_name, spotify_url = get_random_song(genre)
     # Extract and store the track ID in the variable
     track_id = extract_track_id(spotify_url)
-    return (song_name, artist_name, spotify_url, track_id, last_mood_detected, predicted_mood)
+    return (song_name, artist_name, spotify_url, track_id)
 
-    # Open the Spotify track page in the default web browser
-    # webbrowser.open(spotify_url)
+def return_all_data():
+    genre, last_mood_detected, predicted_mood = getting_combined_mood.decide_combined_mood()
+    # Play a random song
+    song_name, artist_name, spotify_url, track_id = play_random_song(genre)
 
-# Play a random song
-song_name, artist_name, spotify_url, track_id, last_mood_detected, predicted_mood = play_random_song(genre, last_mood_detected, predicted_mood)
-
-song_data = {
-        "song_name": song_name,
-        "artist_name": artist_name,
-        "spotify_url": spotify_url, 
-        "track_id": track_id, 
-        "last_mood_detected": last_mood_detected, 
-        "predicted_mood": predicted_mood
-    }
+    return (genre, last_mood_detected, predicted_mood, song_name, artist_name, spotify_url, track_id)

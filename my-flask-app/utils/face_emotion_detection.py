@@ -1,28 +1,29 @@
 import cv2
 import pickle
 import numpy as np
-from utils.threaded_video_stream import *
+import threaded_video_stream
 import time
 
-# Loading face emotion detection model
-face_model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model.pkl'
-
-with open(face_model_pickle_file_path, 'rb+') as file:
-    mood_detection_face_model = pickle.load(file)
-
-# Creating dictionary for mood detection
-mood_dict = {
-    0: 'calm',
-    1: 'energetic',
-    2: 'happy',
-    3: 'sad'
-}
-
 def get_last_mood_detected():
+    # Loading face emotion detection model
+    face_model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model.pkl'
+
+    with open(face_model_pickle_file_path, 'rb+') as file:
+        mood_detection_face_model = pickle.load(file)
+
+    # Creating dictionary for mood detection
+    mood_dict = {
+        0: 'calm',
+        1: 'energetic',
+        2: 'happy',
+        3: 'sad'
+    }
+
+
     global last_mood_detected
     # Starting the webcam feed
     vs = cv2.VideoCapture(3, cv2.CAP_DSHOW)
-    fps = FPS().start()
+    fps = threaded_video_stream.FPS().start()
 
     # Initialize the start time
     start_time = time.time()

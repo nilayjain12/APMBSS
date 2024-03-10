@@ -37,20 +37,16 @@
       
       <canvas id="canvas"></canvas>
       
-      
-    
-    <!-- Container for displaying JSON data -->
-    <div id="data-container">
-        
-    </div>
+      <!-- Container for displaying JSON data -->
+      <div id="result"></div>
 
     <script src="{{ url_for('static', filename='js/index.js') }}">
     </script>
 
-    <script>
+    <!-- <script>
         const song_data = JSON.parse({{ song_data | tojson }})
         console.log(song_data)
-    </script>
+    </script> -->
 
  </body>
 </html>

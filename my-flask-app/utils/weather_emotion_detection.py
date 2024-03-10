@@ -77,5 +77,3 @@ def get_key_from_value(dict_mood, predicted_mood_EncodedValue):
             return key
     # If the value is not found, you can handle it accordingly
     return None
-
-print(predict_mood_based_on_weather())

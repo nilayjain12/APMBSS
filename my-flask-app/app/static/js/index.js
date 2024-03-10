@@ -178,22 +178,31 @@ render = () => {
   window.requestAnimationFrame(render)
 }
 
-// Modified fetchData function to return a promise
-function fetchData() {
-    return fetch('http://localhost:80/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Process the data here as needed
-            console.log(data); // For example, log the data to the console
-            // Optionally, you can process the data here and use it to determine the behavior of the confetti burst
-        })
-        .catch(error => console.error('Error fetching data:', error));
-}
+// // Modified fetchData function to return a promise
+// function fetchData() {
+//     return fetch('http://localhost:80/')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Process the data here as needed
+//             console.log(data); // For example, log the data to the console
+//             // Optionally, you can process the data here and use it to determine the behavior of the confetti burst
+//         })
+//         .catch(error => console.error('Error fetching data:', error));
+// }
+
+// document.getElementById('button').addEventListener('click', function() {
+//   fetch()
+//       .then(response => response.json())
+//       .then(data => {
+//           document.getElementById('result').textContent = data.result;
+//       })
+//       .catch(error => console.error('Error:', error));
+// });
 
 // Modified clickButton function to wait for fetchData to complete
 clickButton = () => {
@@ -204,7 +213,7 @@ clickButton = () => {
         button.classList.remove('ready');
         setTimeout(() => {
             // Fetch data from Flask API and wait for it to complete
-            fetchData().then(() => {
+            fetch().then(() => {
                 // Completed stage
                 button.classList.add('complete');
                 button.classList.remove('loading');
