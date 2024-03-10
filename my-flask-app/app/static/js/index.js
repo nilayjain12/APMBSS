@@ -178,58 +178,29 @@ render = () => {
   window.requestAnimationFrame(render)
 }
 
-// // Modified fetchData function to return a promise
-// function fetchData() {
-//     return fetch('http://localhost:80/')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Process the data here as needed
-//             console.log(data); // For example, log the data to the console
-//             // Optionally, you can process the data here and use it to determine the behavior of the confetti burst
-//         })
-//         .catch(error => console.error('Error fetching data:', error));
-// }
-
-// document.getElementById('button').addEventListener('click', function() {
-//   fetch()
-//       .then(response => response.json())
-//       .then(data => {
-//           document.getElementById('result').textContent = data.result;
-//       })
-//       .catch(error => console.error('Error:', error));
-// });
-
-// Modified clickButton function to wait for fetchData to complete
+// cycle through button states when clicked
 clickButton = () => {
-    if (!disabled) {
-        disabled = true;
-        // Loading stage
-        button.classList.add('loading');
-        button.classList.remove('ready');
+  if (!disabled) {
+    disabled = true
+    // Loading stage
+    button.classList.add('loading')
+    button.classList.remove('ready')
+    setTimeout(() => {
+      // Completed stage
+      button.classList.add('complete')
+      button.classList.remove('loading')
+      setTimeout(() => {
+        window.initBurst()
         setTimeout(() => {
-            // Fetch data from Flask API and wait for it to complete
-            fetch().then(() => {
-                // Completed stage
-                button.classList.add('complete');
-                button.classList.remove('loading');
-                setTimeout(() => {
-                    window.initBurst();
-                    setTimeout(() => {
-                        // Reset button so user can select it again
-                        disabled = false;
-                        button.classList.add('ready');
-                        button.classList.remove('complete');
-                    }, 4000);
-                }, 320);
-            });
-        }, 1800);
-    }
-};
+          // Reset button so user can select it again
+          disabled = false
+          button.classList.add('ready')
+          button.classList.remove('complete')
+        }, 4000)
+      }, 320)
+    }, 1800)
+  }
+}
 
 // re-init canvas if the window size changes
 resizeCanvas = () => {

@@ -1,5 +1,5 @@
-import face_emotion_detection
-import weather_emotion_detection
+from utils import face_emotion_detection
+from utils import weather_emotion_detection
 from random import choice
 
 def decide_combined_mood():

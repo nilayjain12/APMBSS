@@ -9,44 +9,75 @@
  </head>
 
  <body>
-    <!-- Your content goes here -->
 
+    <canvas id="canvas"></canvas>
+    <!-- Your content goes here -->
     <button id="button" class="ready" onclick="clickButton();">
   
-        <div class="message submitMessage">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12.2">
-            <polyline stroke="currentColor" points="2,7.1 6.5,11.1 11,7.1 "/>
-            <line stroke="currentColor" x1="6.5" y1="1.2" x2="6.5" y2="10.3"/>
-          </svg> <span class="button-text">Detect Mood</span>
-        </div>
-        
-        <div class="message loadingMessage">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
-            <circle class="loadingCircle" cx="2.2" cy="10" r="1.6"/>
-            <circle class="loadingCircle" cx="9.5" cy="10" r="1.6"/>
-            <circle class="loadingCircle" cx="16.8" cy="10" r="1.6"/>
-          </svg>
-        </div>
-        
-        <div class="message successMessage">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 11">
-            <polyline stroke="currentColor" points="1.4,5.8 5.1,9.5 11.6,2.1 "/>
-          </svg> <span class="button-text">Mood Detected</span>
-        </div>
-      </button>
+      <div class="message submitMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12.2">
+          <polyline stroke="currentColor" points="2,7.1 6.5,11.1 11,7.1 "/>
+          <line stroke="currentColor" x1="6.5" y1="1.2" x2="6.5" y2="10.3"/>
+        </svg> <span class="button-text">DETECT MOOD</span>
+      </div>
       
-      <canvas id="canvas"></canvas>
+      <div class="message loadingMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
+          <circle class="loadingCircle" cx="2.2" cy="10" r="1.6"/>
+          <circle class="loadingCircle" cx="9.5" cy="10" r="1.6"/>
+          <circle class="loadingCircle" cx="16.8" cy="10" r="1.6"/>
+        </svg>
+      </div>
       
-      <!-- Container for displaying JSON data -->
-      <div id="result"></div>
+      <div class="message successMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 11">
+          <polyline stroke="currentColor" points="1.4,5.8 5.1,9.5 11.6,2.1 "/>
+        </svg> <span class="button-text">Mood Detected</span>
+      </div>
+    </button>
+
+  <script>
+      document.getElementById('button').addEventListener('click', function() {
+    fetch('/detect_mood')
+        .then(response => response.json())
+        .then(data => {
+            // Handle the returned data here
+            console.log(data);
+            track_id = data.track_id
+            console.log(track_id);
+            updateSpotifyEmbed(track_id);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+    // Function to update Spotify embed src
+    function updateSpotifyEmbed(track_id) {
+        // Get the iframe element
+        var iframe = document.getElementById('spotifyEmbed');
+
+        // Construct the new src URL
+        var newSrc = "https://open.spotify.com/embed/track/" + track_id + "?utm_source=generator";
+
+        // Set the new src to the iframe
+        iframe.src = newSrc;
+    }
+
+    // Example usage: Update the Spotify embed with a new track ID
+    // Call this function with the desired track ID as an argument
+    </script>
 
     <script src="{{ url_for('static', filename='js/index.js') }}">
     </script>
 
-    <!-- <script>
-        const song_data = JSON.parse({{ song_data | tojson }})
-        console.log(song_data)
-    </script> -->
+  <div style="border-radius:12px; width:60%; height:60%; position:fixed; left: 25%; right: 25%;">
+    <!-- Spotify Embed Container -->
+      <!-- Spotify Embed Iframe -->
+      <iframe id="spotifyEmbed" src="" style="top:0; width:80%; height:60%; position:absolute; border:0;" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
+  <script>
+
+  </script>
 
  </body>
 </html>

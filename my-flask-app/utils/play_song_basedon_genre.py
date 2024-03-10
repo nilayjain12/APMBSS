@@ -1,4 +1,4 @@
-import getting_combined_mood
+from utils import getting_combined_mood
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import random

@@ -11,7 +11,7 @@
   }
   body {
     -webkit-font-smoothing: antialiased;
-    background-color: #f4f7ff;
+    background-color: #a7d4ff;
   }
   
   canvas {
@@ -43,7 +43,7 @@
     z-index: 1;
   }
   button::before {
-    background: #1f2335;
+    background: #000000cc;
     border-radius: 50px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) inset;
     content: "";
@@ -128,7 +128,7 @@
     transition: all 0.2s ease var(--d);
   }
   .submitMessage svg {
-    color: #5c86ff;
+    color: #ffffff;
     margin-left: -1px;
     opacity: 0;
     position: relative;
@@ -142,7 +142,7 @@
     transition: opacity 0.3s linear 0.3s, top 0.4s cubic-bezier(0.22, 0, 0.41, -0.57);
   }
   .loadingMessage svg {
-    fill: #5c86ff;
+    fill: #ffffff;
     margin: 0;
     width: 22px;
   }
@@ -152,7 +152,7 @@
     transition: all 0.2s ease var(--dr);
   }
   .successMessage svg {
-    color: #5cffa1;
+    color: #ffffff;
     stroke-dasharray: 20;
     stroke-dashoffset: 20;
     transition: stroke-dashoffset 0.3s ease-in-out;
@@ -165,43 +165,4 @@
   
   .loadingCircle:nth-child(3) {
     animation-delay: 0.2s;
-  }
-  
-  /* Website Link */
-  .website-link {
-    background: #f8faff;
-    border-radius: 50px 0 0 50px;
-    bottom: 30px;
-    color: #324b77;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    height: 34px;
-    filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.1));
-    padding: 0 20px 0 40px;
-    position: fixed;
-    right: 0;
-    text-align: left;
-    text-decoration: none;
-  }
-  .website-link__icon {
-    left: -10px;
-    position: absolute;
-    top: -12px;
-    width: 44px;
-  }
-  .website-link__name {
-    display: block;
-    font-size: 14px;
-    line-height: 14px;
-    margin: 5px 0 3px;
-  }
-  .website-link__last-name {
-    color: #55bada;
-  }
-  .website-link__message {
-    color: #8aa8c5;
-    display: block;
-    font-size: 7px;
-    line-height: 7px;
   }

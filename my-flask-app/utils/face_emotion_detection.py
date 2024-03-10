@@ -1,7 +1,7 @@
 import cv2
 import pickle
 import numpy as np
-import threaded_video_stream
+from utils import threaded_video_stream
 import time
 
 def get_last_mood_detected():
