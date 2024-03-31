@@ -7,59 +7,34 @@ def decide_combined_mood():
     predicted_mood = weather_emotion_detection.predict_mood_based_on_weather()
 
     genre_energetic_energetic = [
-        'edm',
-        'electro',
-        'electronic',
-        'indie-pop',
-        'j-dance',
-        'j-pop',
-        'j-rock',
-        'latin',
-        'party',
-        'pop',
-        'progressive-house',
-        'rock',
-        'techno',
-        'trance',
-        'world-music'
+        'dance', 'dubstep', 'edm', 'electro', 'house', 'techno', 'trance', 'garage', 'emo', 'punk', 'punk-rock', 'grindcore', 'hard-rock'
     ]
     genre_energetic_happy = [
-        'disco', 'funk', 'happy'
+        'disco', 'k-pop', 'party', 'reggaeton', 'work-out', 'breakbeat', 'chicago-house', 'latin', 'post-dubstep', 'hip-hop'
     ]
     genre_energetic_calm = [
-        'ambient', 'bossanova', 'chill'
+        'afrobeat', 'turkish', 'bossanova', 'club', 'dancehall', 'funk', 'power-pop', 'rock-n-roll', 'salsa', 'samba', 'minimal-techno'
     ]
     genre_energetic_sad = [
-        'party', 'pop'
+        'progressive-house', 'pop', 'alternative'
     ]
     genre_happy_happy = [
-        'children',
-        'disney',
-        'indie-pop',
-        'j-pop',
-        'k-pop',
-        'latino',
-        'pop',
-        'power-pop',
-        'salsa',
-        'samba',
-        'summer',
-        'swedish'
+        'ska', 'summer', 'synth-pop', 'children', 'comedy', 'disney', 'folk', 'holidays', 'kids', 'alt-rock', 'forro', 'malay', 'road-trip'
     ]
     genre_happy_calm = [
-        'bossanova', 'chill', 'jazz', 'piano', 'soundtracks', 'study'
+        'world-music', 'synth-pop', 'trip-hop', 'mandopop', 'acoustic', 'bluegrass'
     ]
     genre_happy_sad = [
-        'happy', 'study', 'soundtracks'
+        'indie', 'indie-pop', 'tango', 'cantopop', 'show-tunes', 'country'
     ]
     genre_calm_calm = [
-        'acoustic', 'bossanova', 'chill', 'classical', 'jazz', 'piano', 'sleep', 'soundtracks', 'study'
+        'jazz', 'ambient', 'chill', 'minimal-techno', 'post-dubstep', 'grunge', 'cantopop', 'show-tunes', 'acoustic', 'brazil', 'romance', 'soul', 'spanish', 'indian'
     ]
     genre_calm_sad = [
-        'rainy-day', 'sad'
+        'blues', 'classical', 'piano', 'singer-songwriter', 'acoustic', 'british', 'opera', 'sleep'
     ]
     genre_sad = [
-        'blues', 'country', 'emo', 'gothic', 'grunge', 'metal-misc', 'metalcore', 'punk', 'punk-rock', 'rock-n-roll', 'trip-hop'
+        'study', 'blues', 'jazz', 'sad', 'reggae', 'r-n-b', 'singer-songwriter', 'soul', 'guitar', 'sleep'
     ]
 
     # Logic to decide combined mood
