@@ -10,74 +10,91 @@
 
  <body>
 
-    <canvas id="canvas"></canvas>
+ <div class="center-content" style="display: flex;flex-direction: column-reverse;align-items: center;">
+    <h1 style="font-family: monospace;font-variant-caps: petite-caps;text-transform: uppercase;font-size: 30px;">Welcome, {{ first_name }}</h1>
+    <button id="logout-button" onclick="logout()">Logout</button>
+ </div>
+<script>
+  function logout() {
+      window.location.href = "/login";
+  }
+</script>
+
+<div style="display: flex;justify-content: space-around;">
     <!-- Your content goes here -->
-    <button id="button" class="ready" onclick="clickButton();">
-  
-      <div class="message submitMessage">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12.2">
-          <polyline stroke="currentColor" points="2,7.1 6.5,11.1 11,7.1 "/>
-          <line stroke="currentColor" x1="6.5" y1="1.2" x2="6.5" y2="10.3"/>
-        </svg> <span class="button-text">DETECT MOOD</span>
-      </div>
-      
-      <div class="message loadingMessage">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
-          <circle class="loadingCircle" cx="2.2" cy="10" r="1.6"/>
-          <circle class="loadingCircle" cx="9.5" cy="10" r="1.6"/>
-          <circle class="loadingCircle" cx="16.8" cy="10" r="1.6"/>
-        </svg>
-      </div>
-      
-      <div class="message successMessage">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 11">
-          <polyline stroke="currentColor" points="1.4,5.8 5.1,9.5 11.6,2.1 "/>
-        </svg> <span class="button-text">Mood Detected</span>
-      </div>
+    <button class="custom-btn btn-6" onclick="detectMood()">
+      <span>DETECT MOOD</span>
     </button>
+</div>
 
-  <script>
-      document.getElementById('button').addEventListener('click', function() {
-    fetch('/detect_mood')
-        .then(response => response.json())
-        .then(data => {
-            // Handle the returned data here
-            console.log(data);
-            track_id = data.track_id
-            console.log(track_id);
-            updateSpotifyEmbed(track_id);
-        })
-        .catch(error => console.error('Error:', error));
-});
+<script>
+  function detectMood() {
+      const fetchRequests = [
+          fetch('/detect_mood'),
+          // Add more fetch requests as needed
+      ];
 
-    // Function to update Spotify embed src
-    function updateSpotifyEmbed(track_id) {
-        // Get the iframe element
-        var iframe = document.getElementById('spotifyEmbed');
+      Promise.all(fetchRequests)
+          .then(responses => Promise.all(responses.map(response => response.json())))
+          .then(dataArray => {
+              // Handle the returned data here
+              // dataArray is an array of data from each fetch request
+              console.log(dataArray);
+              // Assuming the first fetch request returns the track_id
+              const track_id = dataArray[0].track_id;
+              console.log(track_id);
+              updateSpotifyEmbed(track_id);
 
-        // Construct the new src URL
-        var newSrc = "https://open.spotify.com/embed/track/" + track_id + "?utm_source=generator";
+              // Update the content of the HTML elements
+              document.getElementById('mood-detected-expressions').innerText = dataArray[0].last_mood_detected.toUpperCase();
+              document.getElementById('mood-detected-weather').innerText = dataArray[0].predicted_mood.toUpperCase();
+              document.getElementById('genre').innerText = dataArray[0].genre.toUpperCase();
+              document.getElementById('artist-name').innerText = dataArray[0].artist_name.toUpperCase();
+              document.getElementById('song-name').innerText = dataArray[0].song_name.toUpperCase();
+          })
+          .catch(error => console.error('Error:', error));
+  }
 
-        // Set the new src to the iframe
-        iframe.src = newSrc;
-    }
+  // Function to update Spotify embed src
+  function updateSpotifyEmbed(track_id) {
+      // Get the iframe element
+      var iframe = document.getElementById('spotifyEmbed');
 
-    // Example usage: Update the Spotify embed with a new track ID
-    // Call this function with the desired track ID as an argument
-    </script>
+      // Construct the new src URL
+      var newSrc = "https://open.spotify.com/embed/track/" + track_id + "?utm_source=generator";
 
-    <script src="{{ url_for('static', filename='js/index.js') }}">
-    </script>
+      // Set the new src to the iframe
+      iframe.src = newSrc;
+  }
+</script>
 
-  <div style="border-radius:12px; width:60%; height:60%; position:fixed; left: 25%; right: 25%;">
-    <!-- Spotify Embed Container -->
-      <!-- Spotify Embed Iframe -->
-      <iframe id="spotifyEmbed" src="" style="top:0; width:80%; height:60%; position:absolute; border:0;" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
 
-  <script>
+    <!-- <script src="{{ url_for('static', filename='js/index.js') }}">
+    </script> -->
 
-  </script>
+
+      <!-- <iframe id="spotifyEmbed" src="" style="margin: 0 auto;width:80%;height:60%;position: relative;border:0;" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
+
+      <!-- <iframe id="spotifyEmbed" style="border-radius:12px" src="" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> -->
+
+      <div class="iframe-container">
+        <iframe id="spotifyEmbed" style="border-radius:12px" src="" width="620px" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+
+
+    <div class="container">
+      <div class="box">
+          <h2 style="font-family: monospace;">Mood Detected By Expressions: <br><span id="mood-detected-expressions"></span></h2><br>
+          <h2 style="font-family: monospace;">Mood Detected By Weather: <br><span id="mood-detected-weather"></span></h2>
+      </div>
+    
+      <div class="box">
+          <h2 style="font-family: monospace;">Genre: <br><span id="genre"></span></h2><br>
+          <h2 style="font-family: monospace;">Artist Name: <br><span id="artist-name"></span></h2><br>
+          <h2 style="font-family: monospace;">Song Name: <br><span id="song-name"></span></h2>
+      </div>
+    </div>
 
  </body>
 </html>

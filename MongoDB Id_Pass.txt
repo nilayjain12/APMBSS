@@ -1,0 +1,5 @@
+Userid: nilayjain12
+Password: oF1dRfYhS59Cdxte
+
+Connection String:
+mongodb+srv://nilayjain12:oF1dRfYhS59Cdxte@cluster0.paccwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

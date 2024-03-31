@@ -6,7 +6,7 @@ import time
 
 def get_last_mood_detected():
     # Loading face emotion detection model
-    face_model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model.pkl'
+    face_model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_model_A83_VA70.pkl'
 
     with open(face_model_pickle_file_path, 'rb+') as file:
         mood_detection_face_model = pickle.load(file)
@@ -33,7 +33,7 @@ def get_last_mood_detected():
 
     while True:
         # Check if 20 seconds have passed
-        if time.time() - start_time > 10:
+        if time.time() - start_time > 20:
             break
 
         ret, frame = vs.read()
