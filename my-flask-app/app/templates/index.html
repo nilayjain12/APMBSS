@@ -30,7 +30,7 @@
 <script>
   function detectMood() {
       const fetchRequests = [
-          fetch('/detect_mood'),
+          fetch('/detect_mood')
           // Add more fetch requests as needed
       ];
 
@@ -52,7 +52,7 @@
               document.getElementById('artist-name').innerText = dataArray[0].artist_name.toUpperCase();
               document.getElementById('song-name').innerText = dataArray[0].song_name.toUpperCase();
           })
-          .catch(error => console.error('Error:', error));
+          .catch(error => console.error('Error:', error))
   }
 
   // Function to update Spotify embed src

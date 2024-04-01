@@ -1,12 +1,11 @@
 import cv2
 import numpy as np
-import time
 import tensorflow as tf
 
 def get_last_mood_detected():
-    # Loading the saved model
-    model_load_dir = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\Saved_Model'
-    loaded_model = tf.keras.models.load_model(model_load_dir)
+    # Loading face emotion detection model
+    model_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\Saved_Model\Final_model.h5'
+    mood_detection_face_model = tf.keras.models.load_model(model_path)
 
     # Creating dictionary for mood detection
     mood_dict = {
@@ -16,48 +15,54 @@ def get_last_mood_detected():
         3: 'sad'
     }
 
+    global last_mood_detected
     # Starting the webcam feed
-    vs = cv2.VideoCapture(3)  # Capture from source 3
-    fps = cv2.CAP_DSHOW
-    time.sleep(2.0)  # Allow the camera sensor to warm up
+    vs = cv2.VideoCapture(3, cv2.CAP_DSHOW)
+    fps = cv2.getTickFrequency()
+
+    # Initialize the start time
+    start_time = cv2.getTickCount()
 
     # Variable to store the last mood detected
     last_mood_detected = None
 
-    # Start time for capturing frames
-    start_time = time.time()
+    while True:
+        # Check if 20 seconds have passed
+        if (cv2.getTickCount() - start_time) / cv2.getTickFrequency() > 20:
+            break
 
-    while time.time() - start_time < 20:  # Capture frames for 20 seconds
         ret, frame = vs.read()
-        if not ret:  # Check if frame was successfully read
+        if not ret: # Check if frame was successfully read
             break
 
         frame = cv2.resize(frame, (1920, 1080))
-        face_detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+        face_detector = cv2.CascadeClassifier(r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\Automated-Personalized-Mood-Based-Song-Selector\haarcascade_face_detection\haarcascade_frontalface_default.xml')
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # Detect faces in the frame
-        faces = face_detector.detectMultiScale(frame, scaleFactor=1.1, minNeighbors=5)
+        faces = face_detector.detectMultiScale(gray_frame, scaleFactor=2.3, minNeighbors=5)
 
         # Process each detected face
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y-50), (x+w, y+h+10), (0, 255, 0), 4)
-            roi_color_frame = frame[y: y + h, x: x + w]  # Use color frame
-            cropped_img = cv2.resize(roi_color_frame, (224, 224))  # Resize for model input
-            cropped_img = np.expand_dims(cropped_img, axis=0)  # Add batch dimension
-
-            # Preprocess the image (if necessary)
-            # For example, you can normalize the pixel values
-            cropped_img = cropped_img / 255.0
+            roi_gray_frame = gray_frame[y: y + h, x: x + w]
+            cropped_img = cv2.resize(roi_gray_frame, (224, 224))  # Resize to match model input shape
+            cropped_img = cv2.cvtColor(cropped_img, cv2.COLOR_GRAY2RGB)  # Convert to RGB
+            cropped_img = np.expand_dims(cropped_img, axis=0)  # Expand dimensions to match model input shape
+            cropped_img = cropped_img / 255.0  # Normalize
 
             # Predict the mood
-            mood_prediction = loaded_model.predict(cropped_img)
-            max_index = int(np.argmax(mood_prediction))
-            last_mood_detected = mood_dict[max_index]  # Update the last mood detected
+            mood_prediction = mood_detection_face_model.predict(cropped_img)
+            max_index = np.argmax(mood_prediction)
+            last_mood_detected = mood_dict[max_index] # Update the last mood detected
             cv2.putText(frame, mood_dict[max_index], (x + 5, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
         cv2.imshow('Mood Detection', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):  # Check for 'q' keypress
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
+    # Stop the timer and display FPS information
+    print("[INFO] approx. FPS: {:.2f}".format(fps / (cv2.getTickCount() - start_time)))
 
     # Release the video stream and close all OpenCV windows
     vs.release()
