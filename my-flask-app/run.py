@@ -4,12 +4,13 @@ from utils.main import main
 from pymongo import MongoClient
 from bson import ObjectId
 import bcrypt
-
-
+import os
+import requests
+import base64
 
 app = Flask(__name__, template_folder = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\my-flask-app\app\templates', static_folder = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\my-flask-app\app\static')
 CORS(app) # This will enable CORS for all routes
-app.secret_key = "A19@ahmnprsy123456789"
+app.secret_key = os.getenv('SECRET_KEY')
 
 # MongoDB Configuration
 client = MongoClient('mongodb+srv://nilayjain12:oF1dRfYhS59Cdxte@cluster0.paccwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
@@ -69,6 +70,36 @@ def logout():
 def main_app():
     data = main()
     return jsonify(data)
+
+
+# Add this function to get access token from Spotify
+def get_spotify_access_token():
+    client_id = os.getenv('CLIENT_ID')
+    client_secret = os.getenv('CLIENT_SECRET')
+    auth_url = 'https://accounts.spotify.com/api/token'
+    auth_response = requests.post(auth_url, {
+        'grant_type': 'client_credentials',
+        'client_id': client_id,
+        'client_secret': client_secret,
+    })
+    access_token = auth_response.json().get('access_token')
+    return access_token
+
+@app.route('/get_recommendations/<genre>', methods=['GET'])
+def get_recommendations(genre):
+    access_token = get_spotify_access_token()
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+    }
+    # You might need to adjust the endpoint and parameters based on the Spotify API documentation
+    recommendations_url = f'https://api.spotify.com/v1/recommendations?seed_genres={genre}&limit=4'
+    recommendations_response = requests.get(recommendations_url, headers=headers)
+    recommendations = recommendations_response.json().get('tracks', [])
+    track_ids = [track['id'] for track in recommendations]
+    return jsonify(track_ids)
+
+
+
 
 if __name__ == '__main__':
     app.run(port=81, debug=True)
