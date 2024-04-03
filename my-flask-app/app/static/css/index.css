@@ -181,3 +181,44 @@
   margin: 0;
   text-align: center;
 }
+
+
+
+/* Container Styling */
+.iframe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7.5px; /* Space between iframes */
+  background-color: #ffffff00; /* Light background color */
+  align-content: center;
+  margin: inherit;
+ }
+ 
+ /* Title Styling */
+ .frame-container h2 {
+  margin-bottom: 0px; /* Space between the title and the iframes */
+  text-align: center; /* Center the title */
+ }
+ 
+ /* Iframe Styling */
+ .frame-container iframe {
+  border-radius: 12px; /* Rounded corners for the iframes */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+ }
+ 
+ .frame-container iframe:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+ }
+ 
+
+ .white-box {
+  background-color: #004965; /* White background */
+  color: black; /* Black text color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow for depth */
+  width: fit-content; /* Adjusts the width to fit the content */
+  margin: 0 auto; /* Centers the box horizontally */
+  display: flex;
+  justify-content: center;
+}
