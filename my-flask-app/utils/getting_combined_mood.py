@@ -10,7 +10,7 @@ def decide_combined_mood():
         'dance', 'dubstep', 'edm', 'electro', 'house', 'techno', 'trance', 'garage', 'emo', 'punk', 'punk-rock', 'grindcore', 'hard-rock'
     ]
     genre_energetic_happy = [
-        'disco', 'k-pop', 'party', 'reggaeton', 'work-out', 'breakbeat', 'chicago-house', 'latin', 'post-dubstep', 'hip-hop'
+        'disco', 'k-pop', 'party', 'reggaeton', 'work-out', 'breakbeat', 'chicago-house', 'latin', 'post-dubstep', 'hip-hop', 'guitar'
     ]
     genre_energetic_calm = [
         'afrobeat', 'turkish', 'bossanova', 'club', 'dancehall', 'funk', 'power-pop', 'rock-n-roll', 'salsa', 'samba', 'minimal-techno'
@@ -28,13 +28,13 @@ def decide_combined_mood():
         'indie', 'indie-pop', 'tango', 'cantopop', 'show-tunes', 'country'
     ]
     genre_calm_calm = [
-        'jazz', 'ambient', 'chill', 'minimal-techno', 'post-dubstep', 'grunge', 'cantopop', 'show-tunes', 'acoustic', 'brazil', 'romance', 'soul', 'spanish', 'indian'
+        'jazz', 'ambient', 'chill', 'minimal-techno', 'post-dubstep', 'cantopop', 'show-tunes', 'acoustic', 'brazil', 'romance', 'soul', 'spanish', 'indian'
     ]
     genre_calm_sad = [
         'blues', 'classical', 'piano', 'singer-songwriter', 'acoustic', 'british', 'opera', 'sleep'
     ]
     genre_sad = [
-        'study', 'blues', 'jazz', 'sad', 'reggae', 'r-n-b', 'singer-songwriter', 'soul', 'guitar', 'sleep'
+        'study', 'blues', 'jazz', 'sad', 'reggae', 'r-n-b', 'singer-songwriter', 'soul', 'sleep'
     ]
 
     # Logic to decide combined mood
