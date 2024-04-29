@@ -10,7 +10,11 @@
 
  <body>
 
- <div class="center-content" style="display: flex;flex-direction: column-reverse;align-items: center;">
+<div style="display: flex; justify-content: center;">
+  <img src="{{ url_for('static', filename='images/actual_logo_2.png') }}" alt="MoodSync Logo" style="height: 150px;">
+</div>
+
+ <div class="center-content" style="display: flex;flex-direction: row; justify-content: space-evenly; align-items: center;">
     <h1 style="font-family: monospace;font-variant-caps: petite-caps;text-transform: uppercase;font-size: 30px;">Welcome, {{ first_name }}</h1>
     <button id="logout-button" onclick="logout()">Logout</button>
  </div>
@@ -53,16 +57,16 @@
               document.getElementById('song-name').innerText = dataArray[0].song_name.toUpperCase();
 
               fetch(`/get_recommendations/${dataArray[0].genre}`)
-          .then(response => response.json())
-          .then(track_ids => {
-              // Update the iframe sources with the new track IDs
-              document.querySelectorAll('.iframe-container iframe').forEach((iframe, index) => {
-                 if (track_ids[index]) {
-                      iframe.src = `https://open.spotify.com/embed/track/${track_ids[index]}?utm_source=generator`;
-                 }
-              });
-          })
-          .catch(error => console.error('Error fetching recommendations:', error));
+.then(response => response.json())
+.then(track_ids => {
+    // Update the iframe sources with the new track IDs
+    document.querySelectorAll('iframe[id^="iframe"]').forEach((iframe, index) => {
+        if (track_ids[index]) {
+            iframe.src = `https://open.spotify.com/embed/track/${track_ids[index]}?utm_source=generator`;
+        }
+    });
+})
+.catch(error => console.error('Error fetching recommendations:', error));
           })
           .catch(error => console.error('Error:', error))
   }

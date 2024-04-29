@@ -23,7 +23,7 @@ def get_last_mood_detected():
     }
 
     # Starting the webcam feed
-    vs = cv2.VideoCapture(2)
+    vs = cv2.VideoCapture(0)
     fps = cv2.getTickFrequency()
 
     # Initialize the start time

@@ -222,3 +222,8 @@
   display: flex;
   justify-content: center;
 }
+
+.webcam-feed {
+  display: flex;
+  justify-content: center;
+}

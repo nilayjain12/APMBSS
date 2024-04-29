@@ -42,7 +42,7 @@ def register():
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         users_collection.insert_one({'firstname': first_name, 'lastname': last_name, 'username': username, 'password': hashed_password})
         session['username'] = username
-        return redirect('/')
+        return redirect('/login')
     
     return render_template('register.html')
 
