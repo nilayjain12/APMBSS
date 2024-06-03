@@ -4,6 +4,8 @@ import requests_cache
 from retry_requests import retry
 import openmeteo_requests
 import pickle
+from config import config  # Import the config dictionary
+import os
 
 list_of_weather_data = []
 dict_mood = {
@@ -61,7 +63,7 @@ def predict_mood_based_on_weather():
         list_of_weather_data = [current_is_day, current_cloud_cover, current_precipitation]
 
     # Loading face emotion detection model
-    weather_model_pickle_file_path = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\data\models\mood_detection_weather_model.pkl'
+    weather_model_pickle_file_path = os.path.join(config['BASE_DIR'], 'data', 'models', 'mood_detection_weather_model.pkl')
 
     with open(weather_model_pickle_file_path, 'rb+') as file:
         mood_detection_weather_model = pickle.load(file)

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, request, redirect, session
+from flask import Flask, request, render_template, jsonify, redirect, session
 from flask_cors import CORS
 from utils.main import main
 from pymongo import MongoClient
@@ -7,9 +7,14 @@ import bcrypt
 import os
 import requests
 import base64
+from config import config  # Import the config dictionary
 
-app = Flask(__name__, template_folder = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\my-flask-app\app\templates', static_folder = r'C:\Users\njain\OneDrive - Cal State Fullerton\SPRING 2024\CPSC 597 Project\Project\APMBSS\my-flask-app\app\static')
-CORS(app) # This will enable CORS for all routes
+app = Flask(
+    __name__, 
+    template_folder=os.path.join(config['BASE_DIR'], 'my-flask-app', 'app', 'templates'),
+    static_folder=os.path.join(config['BASE_DIR'], 'my-flask-app', 'app', 'static')
+)
+CORS(app)  # This will enable CORS for all routes
 app.secret_key = os.getenv('SECRET_KEY')
 
 # MongoDB Configuration
@@ -43,7 +48,7 @@ def register():
         users_collection.insert_one({'firstname': first_name, 'lastname': last_name, 'username': username, 'password': hashed_password})
         session['username'] = username
         return redirect('/login')
-    
+
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -58,7 +63,7 @@ def login():
             return redirect('/')
         else:
             return 'Invalid username/password combination!'
-    
+
     return render_template('login.html')
 
 @app.route('/logout')
@@ -97,8 +102,6 @@ def get_recommendations(genre):
     recommendations = recommendations_response.json().get('tracks', [])
     track_ids = [track['id'] for track in recommendations]
     return jsonify(track_ids)
-
-
 
 
 if __name__ == '__main__':
