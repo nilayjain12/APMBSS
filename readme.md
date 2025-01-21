@@ -20,7 +20,7 @@ MoodSync is an end-to-end web application that leverages machine learning to enh
 
 ## Demo
 
-You can watch a demo of the project on [YouTube](#).
+You can watch a demo of the project on [YouTube](https://www.youtube.com/watch?v=jUTBDARSQL8).
 
 Snapshots of the project are provided below:
 
